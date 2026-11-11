@@ -9,11 +9,17 @@ pipeline {
          stage('Check version nodejs') {
             steps {
                 sh 'newman --version'
+                sh 'npm --version'
+            }
+        }
+        stage('install dep') {
+            steps {
+                sh 'npm install'
             }
         }
         stage('Lancer le test') {
             steps {
-                sh'newman run collections/collection.json -e env/preprod.json'
+                sh'npx newman run collections/collection.json -e env/preprod.json -r cli,htmlextra newman'
             }
         }
        
